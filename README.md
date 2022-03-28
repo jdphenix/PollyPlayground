@@ -7,3 +7,6 @@ service exposes a `Reset()` operation.
 
 The service fails operations 2% of the time, incrementing by 1% each operation 
 until reset. 
+
+# Acknowledgements
+* The Polly Project ([GitHub](https://github.com/App-vNext/Polly)) for their amazing library.
