@@ -47,6 +47,7 @@ namespace CircuitBreakerIdea
             catch (IOException)
             {
                 _logger.LogWarning("Error during queue operation, will retry.");
+                _opQueue.Enqueue(op);
             }
             catch (BrokenCircuitException)
             {
