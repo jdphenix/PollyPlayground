@@ -2,8 +2,9 @@
 
 namespace CircuitBreakerIdea
 {
-    public class OperationSource
+    public class OperationSource : IDisposable
     {
+        private bool _disposed;
         private readonly Random _random = new Random();
         private int _opCount = 0;
         private Timer _timer;
@@ -25,10 +26,21 @@ namespace CircuitBreakerIdea
 
         public IEnumerable<IOperation> GetNewOperations()
         {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(nameof(OperationSource));
+            }
+
             while (_queue.TryDequeue(out var operation))
             {
                 yield return operation;
             }
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)_timer).Dispose();
+            _disposed = true; 
         }
     }
 }
